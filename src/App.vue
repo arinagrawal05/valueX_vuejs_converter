@@ -36,6 +36,7 @@ const checkScroll = () => {
 onMounted(async () => {
   window.addEventListener('scroll', checkScroll)
   await currencyStore.fetchCurrencyHistory()
+  // fetching currency history
 })
 </script>
 

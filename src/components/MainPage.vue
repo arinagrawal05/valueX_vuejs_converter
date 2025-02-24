@@ -36,6 +36,7 @@ const amount = computed({
 const convertCurrency = async () => {
   if (amount.value >= 0) {
     await currencyStore.fetchConvertCurrency()
+    // fetching conversion data
   }
 }
 
