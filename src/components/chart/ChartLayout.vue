@@ -1,13 +1,18 @@
 <script setup>
+//Import necessary functions from Vue and the currency store
 import { ref, computed, watch, onMounted } from 'vue'
 import { useCurrencyStore } from '@/stores/currencyStore'
 import LineChart from './lineChart.js'
 
+// Initialize the currency store instance
 const currencyStore = useCurrencyStore()
 
+// Reactive reference for storing chart data once processed
 const datacollection = ref(null)
+// Flag to indicate when data is loaded and ready for the chart
 const loaded = ref(false)
 
+// Compute the chart data directly from the currency store
 const chartData = computed(() => currencyStore.currencyChartData)
 
 const options = ref({
@@ -42,6 +47,7 @@ const options = ref({
   },
 })
 
+// Overwrite chart options with a second configuration (could be merged with above if needed)
 options.value = {
   responsive: true,
   maintainAspectRatio: false,
@@ -76,9 +82,12 @@ options.value = {
   },
 }
 
+// Function to process raw chart data into the format required by the LineChart component
 const fillData = () => {
+  // If there is no chart data, exit the function
   if (!chartData.value || chartData.value.length === 0) return
 
+  // Prepare the data collection using dates for labels and values for data points
   datacollection.value = {
     labels: chartData.value.map((item) => item.date),
     datasets: [

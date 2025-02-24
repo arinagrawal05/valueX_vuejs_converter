@@ -2,10 +2,13 @@
 import { computed } from 'vue'
 import { useCurrencyStore } from '@/stores/currencyStore'
 
+// Access the currency store to retrieve conversion data
 const currencyStore = useCurrencyStore()
 
+// Create a computed property to easily access conversion details from the store
 const getConvertData = computed(() => currencyStore.getConvertData)
 
+// Utility function to format numbers with a specified number of decimals
 const financial = (x, val) => {
   return Number.parseFloat(x).toFixed(val)
 }
@@ -13,6 +16,7 @@ const financial = (x, val) => {
 
 <template>
   <div class="conversion-result-wrapper">
+    <!-- Display the conversion rate -->
     <div class="divider">
       1
       <u>{{ getConvertData.currencyFrom }}</u>

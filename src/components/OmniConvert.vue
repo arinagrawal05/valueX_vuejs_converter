@@ -7,16 +7,20 @@ import axios from 'axios'
 
 const conversions = ref([])
 
+// Initialize the currency store
 const currencyStore = useCurrencyStore()
 
+// Holds the currently selected currency (default is USD)
 const currency = ref('United States Dollar (USD)')
 
+// Helper: Extracts currency code and name from a formatted string
 const extractCurrencyInfo = (formattedValue) => {
   const code = formattedValue.slice(-4, -1)
   const name = formattedValue.slice(0, -5).trim()
   return [code, name]
 }
 
+// Fetches conversion rates for the selected currency using the Frankfurter API
 const getConversions = async () => {
   try {
     const code = extractCurrencyInfo(currency.value)[0]
@@ -32,6 +36,8 @@ const getConversions = async () => {
   }
 }
 
+// Computed property for two-way binding with the v-select component.
+// When the currency changes, update the value and fetch new conversions.
 const currencychange = computed({
   get: () => currency.value,
   set: (value) => {
@@ -42,6 +48,7 @@ const currencychange = computed({
 
 console.log('hello')
 
+// On component mount, fetch the initial conversion rates.
 onMounted(() => {
   getConversions()
 })
@@ -58,12 +65,14 @@ onMounted(() => {
     </div>
     <div>
       <h3>Choose a currency :</h3>
+      <!-- v-select for choosing the base currency -->
       <v-select
         :options="currencyStore.currencyUnits"
         :searchable="true"
         v-model="currencychange"
         @input="getConversions"
       >
+        <!-- Custom option template showing currency name, code, and flag -->
         <template v-slot:option="val">
           {{ val[1] }}
           ({{ val[0] }})
@@ -76,6 +85,7 @@ onMounted(() => {
         </template>
       </v-select>
     </div>
+    <!-- List of conversion rates -->
     <ul v-for="(currency, index) in conversions" :key="index">
       <div>{{ currency[0] + ' : ' + currency[1] }}</div>
     </ul>
