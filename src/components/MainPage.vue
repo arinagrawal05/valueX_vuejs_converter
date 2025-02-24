@@ -88,6 +88,7 @@ onMounted(async () => {
           step="20"
           class="amountinput"
         />
+        <!-- calls conversion api -->
       </div>
       <div>
         <div>
