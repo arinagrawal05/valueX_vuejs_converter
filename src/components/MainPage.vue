@@ -8,9 +8,11 @@ import ChartLayout from './chart/ChartLayout.vue'
 import OmniConvert from './OmniConvert.vue'
 import AboutUs from './AboutUs.vue'
 
+// Initialize the currency store instance
 const currencyStore = useCurrencyStore()
 const rotated = ref(false)
 
+// Bind currencyFrom with a custom setter that formats the selected value and triggers conversion
 const currencyFrom = computed({
   get: () => currencyStore.currencyFrom,
   set: (value) => {
@@ -19,6 +21,7 @@ const currencyFrom = computed({
   },
 })
 
+// Bind currencyTo similarly, with a custom setter
 const currencyTo = computed({
   get: () => currencyStore.currencyTo,
   set: (value) => {
@@ -27,6 +30,7 @@ const currencyTo = computed({
   },
 })
 
+// Two-way binding for the amount
 const amount = computed({
   get: () => currencyStore.amount,
   set: (value) => {
@@ -34,6 +38,7 @@ const amount = computed({
   },
 })
 
+// Function to fetch conversion data when the amount is valid
 const convertCurrency = async () => {
   if (amount.value >= 0) {
     await currencyStore.fetchConvertCurrency()
@@ -42,12 +47,14 @@ const convertCurrency = async () => {
 }
 
 let isSwapping = false
+// Trigger conversion only if not currently swapping currencies
 const triggerConversion = async () => {
   if (!isSwapping) {
     await convertCurrency()
   }
 }
 
+// Swap the "from" and "to" currencies; includes a helper to parse the formatted string
 const swapCurrency = async () => {
   isSwapping = true
   const extractCurrencyInfo = (formattedValue) => {
@@ -70,6 +77,7 @@ const swapCurrency = async () => {
   isSwapping = false
 }
 
+// On component mount, set an initial amount, trigger conversion, and fetch available currency units
 onMounted(async () => {
   currencyStore.amount = 100
   convertCurrency()
