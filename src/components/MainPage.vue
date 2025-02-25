@@ -274,9 +274,10 @@ input[type='number']:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(../assets/image.png);
+  /* background-image: url(../assets/image.png); */
+  background-image:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5eo0wv8LtSW2Zn0gc46dSVMNttazpQHHOhA&s") ;
   width: 100%;
-  height: 100vh;
+  height: 65vh;
   background-repeat: no-repeat;
   background-position: cover;
   background-size: cover;

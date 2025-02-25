@@ -29,8 +29,8 @@ const currencyStore = useCurrencyStore()
 const isScrolled = ref(false)
 
 const checkScroll = () => {
-  const threshold = window.innerHeight * 1
-  isScrolled.value = window.scrollY > threshold
+  const threshold = window.innerHeight * 0.65;
+  isScrolled.value = window.scrollY > threshold;
 }
 
 onMounted(async () => {
@@ -73,12 +73,13 @@ onMounted(async () => {
 
 .navtext {
   padding-top: 0.5vh;
-  font-family: 'Itim';
+  font-family: 'Arial';
   font-style: normal;
   font-weight: bold;
   font-size: 1.7rem;
   line-height: 1.8rem;
   letter-spacing: 0.1em;
+  cursor: pointer;
 
   color: rgba(42, 221, 42, 0.17);
 
