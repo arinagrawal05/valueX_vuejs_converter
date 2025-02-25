@@ -39,3 +39,57 @@ onMounted(async () => {
   // fetching currency history
 })
 </script>
+<template>
+  <div class="navbar" :class="{ 'changed-color': isScrolled }">
+    <div class="nav">
+      <img src="./assets/image copy.png" height="35rem" />
+      <div class="navtext" :class="{ 'changed-colortext': isScrolled }" @click="goToHome">Home</div>
+      <div class="navtext" :class="{ 'changed-colortext': isScrolled }" @click="goToOmniConvert">
+        OmniConvert
+      </div>
+      <div class="navtext" :class="{ 'changed-colortext': isScrolled }" @click="goToResult">
+        FX Chart
+      </div>
+      <div class="navtext" :class="{ 'changed-colortext': isScrolled }" @click="goToAbout">
+        About Us
+      </div>
+    </div>
+  </div>
+  <RouterView />
+</template>
+
+<style scoped>
+.navbar {
+  position: fixed;
+  width: 100vw;
+
+  background: rgba(42, 221, 42, 0.19);
+}
+.nav {
+  display: flex;
+  gap: 2rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.navtext {
+  padding-top: 0.5vh;
+  font-family: 'Itim';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.7rem;
+  line-height: 1.8rem;
+  letter-spacing: 0.1em;
+
+  color: rgba(42, 221, 42, 0.17);
+
+  -webkit-text-stroke: 0.12rem white;
+}
+
+.changed-color {
+  background: #18c218;
+}
+.changed-colortext {
+  color: white;
+  -webkit-text-stroke: 0rem;
+}
+</style>
