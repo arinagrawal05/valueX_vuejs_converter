@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, nextTick } from 'vue'
+import { computed, onMounted, nextTick, ref } from 'vue'
 import { useCurrencyStore } from '../stores/currencyStore'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
@@ -9,6 +9,7 @@ import OmniConvert from './OmniConvert.vue'
 import AboutUs from './AboutUs.vue'
 
 const currencyStore = useCurrencyStore()
+const rotated = ref(false)
 
 const currencyFrom = computed({
   get: () => currencyStore.currencyFrom,
@@ -55,6 +56,8 @@ const swapCurrency = async () => {
     return [code, name]
   }
 
+  rotated.value = !rotated.value
+
   const fromInfo = extractCurrencyInfo(currencyFrom.value)
   const toInfo = extractCurrencyInfo(currencyTo.value)
 
@@ -79,7 +82,7 @@ onMounted(async () => {
     <div class="converterbox">
       <h1 class="headtext">ValueX</h1>
       <div class="amount">
-        <label for="amount" class="amounttext">Amount</label>
+        <label for="amount" class="selecttext">Amount</label>
         <input
           type="number"
           name="amount"
@@ -91,14 +94,15 @@ onMounted(async () => {
         />
         <!-- calls conversion api -->
       </div>
-      <div>
+      <div class="convertinputs">
         <div>
-          <label for="from">From</label>
+          <label for="from" class="selecttext">From</label>
           <v-select
             :options="currencyStore.currencyUnits"
             v-model="currencyFrom"
             @input="convertCurrency"
             :searchable="true"
+            class="selecttext vselect"
           >
             <template v-slot:option="val">
               {{ val[1] }}
@@ -113,39 +117,91 @@ onMounted(async () => {
           </v-select>
         </div>
         <div>
-          <label for="to">To</label>
+          <label for="to" class="selecttext">To</label>
           <v-select
             :options="currencyStore.currencyUnits"
             v-model="currencyTo"
             @input="convertCurrency"
             :searchable="true"
+            class="selecttext vselect"
           >
             <template v-slot:option="val">
-              {{ val[1] }}
-              ({{ val[0] }})
-              <img
-                class="countryFlag"
-                :src="`/flags/${val[0].substring(0, 2)}.png`"
-                width="25"
-                alt="Flag"
-              />
+              <div class="option">
+                {{ val[1] }}
+                ({{ val[0] }})
+                <img
+                  class="countryFlag"
+                  :src="`/flags/${val[0].substring(0, 2)}.png`"
+                  width="25"
+                  alt="Flag"
+                />
+              </div>
             </template>
           </v-select>
         </div>
       </div>
-      <button @click="swapCurrency"><img src="../assets/image copy 2.png" /></button>
+      <button @click="swapCurrency" class="swapbutton">
+        <img src="../assets/image copy 2.png" class="swap" :class="{ rotated: rotated }" />
+      </button>
       <div class="scrolltext">(scroll down or click on FXChart to see the results)</div>
     </div>
   </div>
+  <hr id="result" />
   <div class="resultbox">
-    <ConverterResult id="result" />
+    <ConverterResult />
     <ChartLayout />
   </div>
+  <hr id="omniconvert" />
   <OmniConvert />
   <AboutUs />
 </template>
 
 <style scoped>
+.selecttext {
+  width: 21vw; /* Adjust the width as needed */
+}
+
+/* Set the width of the dropdown options */
+:deep(.vs__dropdown-menu) {
+  width: 21vw; /* Adjust the width to match the v-select dropdown */
+}
+
+/* Ensure the options within the dropdown have the same width */
+:deep(.vs__dropdown-option) {
+  width: 100%;
+}
+.option {
+  width: 100%;
+}
+.swap {
+  height: 10vh;
+  transition: transform 0.3s ease; /* Smooth transition for rotation */
+}
+
+/* Class to apply 180-degree rotation */
+.rotated {
+  transform: rotate(180deg);
+}
+
+.swapbutton {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.selecttext {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding-bottom: 0.5rem;
+  color: rgba(30, 30, 30, 0.7);
+}
+.convertinputs {
+  display: flex;
+  gap: 1.8rem;
+}
+
 .scrolltext {
   font-family: 'Inter';
   font-style: normal;
@@ -159,11 +215,24 @@ onMounted(async () => {
 .resultbox {
   height: 90vh;
 }
-/* .amounttext {
-}
 
 .amountinput {
-} */
+  width: 44.5vw;
+  height: 4vh;
+  border: rgba(30, 30, 30, 0.4) solid 0.1rem;
+  border-radius: 10rem;
+  padding: 1rem;
+  color: rgba(30, 30, 30, 0.8);
+
+  -webkit-transition: 0.5s;
+  transition: 0.2s;
+  outline: none;
+}
+
+input[type='number']:focus {
+  border: 0.125rem solid #18c218;
+}
+
 .amount {
   display: flex;
   flex-direction: column;
@@ -173,11 +242,11 @@ onMounted(async () => {
   font-family: 'Anton';
   font-style: normal;
   font-weight: bolder;
-  font-size: 2.7rem;
-  line-height: 2.9rem;
+  font-size: 3rem;
+  line-height: 3.2rem;
   color: #d9d9db;
-  -webkit-text-stroke: 0.1rem #18c218;
-  letter-spacing: -0.12rem;
+  -webkit-text-stroke: 0.17rem #18c218;
+  letter-spacing: -0.1rem;
 }
 
 .converterbox {
@@ -189,6 +258,8 @@ onMounted(async () => {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+
+  gap: 0.7rem;
 }
 
 .background {
@@ -209,8 +280,18 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
 input[type='number'] {
   appearance: textfield;
+}
+
+:deep(.vs__dropdown-toggle) {
+  border: none;
+  outline: none;
+}
+
+.vselect {
+  border: rgba(30, 30, 30, 0.4) solid 0.1rem;
+  border-radius: 20rem;
+  padding-bottom: 0;
 }
 </style>
