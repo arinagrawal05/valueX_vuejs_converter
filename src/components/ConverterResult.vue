@@ -58,10 +58,20 @@ const financial = (x, val) => {
   margin-top: 4rem;
 }
 
-.conversion-result .equal {
+.conversion-result {
   font-size: 24px;
-  color: var(--color-gray);
+
   line-height: 1.2;
+}
+
+.equal {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+
+  color: rgba(30, 30, 30, 0.53);
 }
 
 .conversion-result .currency {
@@ -69,33 +79,40 @@ const financial = (x, val) => {
   font-weight: 400;
 }
 
-.conversion-result .conversion-from {
+.conversion-result {
   font-size: 28px;
-  color: var(--color-gray);
 }
 
-.conversion-result .conversion-to {
+.conversion-from {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 2.2rem;
+  letter-spacing: 0.06rem;
+  text-align: right;
+
+  color: rgba(30, 30, 30, 0.53);
+}
+
+.conversion-result {
   font-size: 38px;
   font-weight: 800;
-  color: var(--color-primary);
 }
 
-@supports ((background-clip: text) or (-webkit-background-clip: text)) and
-  ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
-  .conversion-result .conversion-to {
-    background-image: linear-gradient(
-      45deg,
-      var(--color-secondary),
-      var(--color-primary),
-      var(--color-secondary),
-      var(--color-primary)
-    );
-    background-size: cover;
-    -webkit-background-clip: text;
-    background-clip: text;
+.conversion-to {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 3rem;
+  line-height: 3.2rem;
+  text-align: right;
 
-    color: salmon;
-  }
+  background: linear-gradient(0deg, #0c5c0c 0%, #18c218 48%, #0c5c0c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.05rem;
 }
 
 .update-date .feather {
@@ -112,9 +129,16 @@ u {
   align-items: center;
   flex: 0 1 0%;
   color: rgba(0, 0, 0, 0.6);
-  font-size: 15px;
-  font-weight: 400;
+
   letter-spacing: 0.5px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+
+  color: rgba(30, 30, 30, 0.53);
 }
 
 .divider::before,

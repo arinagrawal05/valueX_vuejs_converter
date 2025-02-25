@@ -94,15 +94,15 @@ const fillData = () => {
       {
         label: 'Value: ',
         fill: true,
-        backgroundColor: 'rgba(164, 5, 175, 0.4)',
-        borderColor: '#ce0864',
-        pointBackgroundColor: '#ce0864',
+        backgroundColor: 'rgba(24, 194, 24, 0.4)',
+        borderColor: '#18c218',
+        pointBackgroundColor: '#18c218',
         borderWidth: 3,
         pointRadius: 5,
         pointHoverRadius: 8,
         tension: 0.4,
-        pointHoverBackgroundColor: '#a405af',
-        pointBorderColor: '#ce0864',
+        pointHoverBackgroundColor: '#18c218',
+        pointBorderColor: '#18c218',
         data: chartData.value.map((item) => item.value),
       },
     ],
@@ -137,6 +137,7 @@ onMounted(() => {
   justify-content: center;
 }
 .chart {
-  width: 50vh;
+  width: 60vh;
+  height: 40vh;
 }
 </style>
