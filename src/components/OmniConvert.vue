@@ -7,16 +7,20 @@ import axios from 'axios'
 
 const conversions = ref([])
 
+// Initialize the currency store
 const currencyStore = useCurrencyStore()
 
+// Holds the currently selected currency (default is USD)
 const currency = ref('United States Dollar (USD)')
 
+// Helper: Extracts currency code and name from a formatted string
 const extractCurrencyInfo = (formattedValue) => {
   const code = formattedValue.slice(-4, -1)
   const name = formattedValue.slice(0, -5).trim()
   return [code, name]
 }
 
+// Fetches conversion rates for the selected currency using the Frankfurter API
 const getConversions = async () => {
   try {
     const code = extractCurrencyInfo(currency.value)[0]
@@ -32,6 +36,8 @@ const getConversions = async () => {
   }
 }
 
+// Computed property for two-way binding with the v-select component.
+// When the currency changes, update the value and fetch new conversions.
 const currencychange = computed({
   get: () => currency.value,
   set: (value) => {
@@ -42,6 +48,7 @@ const currencychange = computed({
 
 console.log('hello')
 
+// On component mount, fetch the initial conversion rates.
 onMounted(() => {
   getConversions()
 })
@@ -56,7 +63,7 @@ onMounted(() => {
         currency.
       </p>
     </div>
-    <div class="choicebox">
+<div class="choicebox">
       <h3 class="choicehead">Choose a currency :</h3>
       <v-select
         :options="currencyStore.currencyUnits"
@@ -77,8 +84,7 @@ onMounted(() => {
         </template>
       </v-select>
     </div>
-
-    <div class="headers" style="margin-top: 2rem">
+ <div class="headers" style="margin-top: 2rem">
       <div style="padding: 0.4rem; width: 15vw" class="name">Unicode</div>
       <div style="display: flex">
         <hr style="height: 2rem; width: 0.1rem; color: #18c218" />
@@ -208,3 +214,4 @@ onMounted(() => {
   color: rgba(30, 30, 30, 0.62);
 }
 </style>
+
